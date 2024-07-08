@@ -1,0 +1,227 @@
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomHalfSheet(
+    name: String = "ここに家形を遷移しますか？",
+    showDialog: Boolean,
+    onDismiss: () -> Unit
+) {
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            content = {
+                Card {
+                    Column(
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .padding(vertical = 24.dp),
+                            text = name
+                        )
+                        Button(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(8.dp),
+                            onClick = { }
+                        ) {
+                            Text("はい")
+                        }
+                        OutlinedButton(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(8.dp),
+                            onClick = { }
+                        ) {
+                            Text("いいえ")
+                        }
+                    }
+                }
+            }
+        )
+    }
+}
+
+@SuppressLint("CoroutineCreationDuringComposition")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Abc() {
+    Scaffold(
+        content = { contentPadding ->
+
+            val showDialog = remember { mutableStateOf(false) }
+            if (showDialog.value) {
+                CustomHalfSheet(name = "ここに家形を遷移しますか？",
+                    showDialog = showDialog.value,
+                    onDismiss = { showDialog.value = false })
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding)
+            ) {
+                Image(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                    painter = painterResource(id = R.drawable.map),
+                    contentDescription = ""
+                )
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd),
+                        horizontalAlignment = Alignment.End,
+
+                        ) {
+                        Card(
+                            modifier = Modifier
+                                .clip(
+                                    RoundedCornerShape(
+                                        topStartPercent = 15,
+                                        bottomStartPercent = 15
+                                    )
+                                )
+                                .clickable { },
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.background,
+                            ),
+                        ) {
+                            Image(
+                                modifier = Modifier
+                                    .padding(end = 8.dp)
+                                    .width(54.dp)
+                                    .height(54.dp)
+                                    .padding(
+                                        6.dp
+                                    ),
+                                alpha = 0.7f,
+                                imageVector = Icons.Filled.Satellite,
+                                contentDescription = ""
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        Card(
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .clip(RoundedCornerShape(50))
+                                .clickable {
+                                },
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.background,
+                            )
+                        ) {
+                            Image(
+                                modifier = Modifier
+                                    .width(54.dp)
+                                    .height(54.dp)
+                                    .padding(6.dp),
+                                alpha = 0.7f,
+                                imageVector = Icons.Filled.RadioButtonChecked,
+                                contentDescription = ""
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(1.dp))
+                        TextButton(
+                            onClick = { }
+                        ) {
+                            Text("ON/OFF")
+                        }
+                    }
+                }
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(8.dp)
+                ) {
+                    Card(
+                        modifier = Modifier
+                            .align(Alignment.TopStart)
+                            .clip(RoundedCornerShape(50))
+                            .clickable {
+                                showDialog.value = true
+                            },
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.background,
+                        )
+                    ) {
+                        Image(
+                            modifier = Modifier
+                                .width(54.dp)
+                                .height(54.dp)
+                                .padding(6.dp),
+                            alpha = 0.7f,
+                            imageVector = Icons.Filled.Menu,
+                            contentDescription = ""
+                        )
+                    }
+
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                    ) {
+                        Card(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(50))
+                                .clickable { },
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.background,
+                            )
+                        ) {
+                            Image(
+                                modifier = Modifier
+                                    .width(54.dp)
+                                    .height(54.dp)
+                                    .padding(6.dp),
+                                alpha = 0.7f,
+                                imageVector = Icons.Filled.Search,
+                                contentDescription = ""
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        Card(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(50))
+                                .clickable { },
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.background,
+                            )
+                        ) {
+                            Image(
+                                modifier = Modifier
+                                    .width(54.dp)
+                                    .height(54.dp)
+                                    .padding(6.dp),
+                                alpha = 0.7f,
+                                imageVector = Icons.Filled.Layers,
+                                contentDescription = ""
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        Card(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(50))
+                                .clickable { },
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.background,
+                            )
+                        ) {
+                            Image(
+                                modifier = Modifier
+                                    .width(54.dp)
+                                    .height(54.dp)
+                                    .padding(6.dp),
+                                alpha = 0.7f,
+                                imageVector = Icons.Filled.BookmarkBorder,
+                                contentDescription = ""
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    )
+}
