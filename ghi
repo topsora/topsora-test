@@ -1,0 +1,381 @@
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.snsh.sample.PasswordState
+import com.snsh.sample.ui.common.core.DropdownList
+import com.snsh.sample.ui.common.core.FirstName
+import com.snsh.sample.ui.common.core.LastName
+import com.snsh.sample.ui.common.core.SearchMenuButton
+import com.snsh.sample.ui.common.core.SearchTitle
+import com.snsh.sample.ui.common.core.SearchTopAppBar
+
+
+@Composable
+fun SearchScreen(
+    modifier: Modifier = Modifier,
+    scaffoldState: ScaffoldState = rememberScaffoldState()
+) {
+    val state = rememberScrollState()
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = {
+            SearchTopAppBar("検索メニュー") {
+
+            }
+        },
+        modifier = modifier.fillMaxSize(),
+        bottomBar = {
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp, start = 24.dp, end = 24.dp),
+                shape = RoundedCornerShape(8.dp),
+                onClick = { }) {
+                Text("検索する")
+            }
+        }
+    ) { paddingValues ->
+
+        val focusRequester = remember { FocusRequester() }
+        val passwordState = remember { PasswordState() }
+
+        val focusRequester2 = remember { FocusRequester() }
+        val passwordState2 = remember { PasswordState() }
+
+        Column(modifier = modifier
+            .padding(paddingValues)
+            .verticalScroll(state)) {
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp, horizontal = 8.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                SearchMenuButton(
+                    text = "原簿検索",
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .weight(1f)
+                ) {}
+                SearchMenuButton(
+                    text = "スポット検索",
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .weight(1f)
+                ) {}
+            }
+            SearchTitle(
+                text = "氏名、事業所名",
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+            Row(
+                modifier = modifier
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = "氏名",
+                    modifier = modifier
+                        .wrapContentSize()
+                        .weight(1f),
+                    color = Color.Gray
+                )
+                FirstName("性",
+                    passwordState = passwordState,
+                    modifier = Modifier
+                        .focusRequester(focusRequester)
+                        .weight(1.6f)
+                        .padding(horizontal = 8.dp),
+                    onImeAction = { }
+                )
+                LastName("名",
+                    passwordState = passwordState2,
+                    modifier = Modifier
+                        .focusRequester(focusRequester2)
+                        .weight(2f)
+                        .padding(start = 8.dp, end = 16.dp),
+                    onImeAction = { }
+                )
+            }
+            HorizontalDivider(
+                thickness = 2.dp,
+                modifier = modifier
+                    .padding(
+                        start = 32.dp, top = 8.dp, bottom = 8.dp, end = 16.dp
+                    ),
+            )
+            Row(
+                modifier = modifier
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = "マンション／\nビル名",
+                    modifier = modifier
+                        .wrapContentSize()
+                        .weight(1f),
+                    color = Color.Gray
+                )
+                FirstName("",
+                    passwordState = passwordState,
+                    modifier = Modifier
+                        .focusRequester(focusRequester)
+                        .weight(1.6f)
+                        .padding(horizontal = 8.dp),
+                    onImeAction = { }
+                )
+            }
+            HorizontalDivider(
+                thickness = 2.dp,
+                modifier = modifier
+                    .padding(
+                        start = 32.dp, top = 8.dp, bottom = 8.dp, end = 16.dp
+                    ),
+            )
+            SearchTitle(
+                text = "住所または郵便番号",
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+            Card(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .clip(
+                        RoundedCornerShape(
+                            12.dp
+                        )
+                    )
+                    .clickable { },
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White,
+                ),
+                border = BorderStroke(2.dp, Color.Gray),
+            ) {
+                Row(
+                    modifier = modifier
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "住所",
+                        modifier = modifier
+                            .wrapContentSize(),
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Column(
+                    ) {
+                        Row(
+                            modifier = modifier
+                                .padding(vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(
+                                text = "都道府県",
+                                modifier = modifier
+                                    .wrapContentSize()
+                                    .weight(1.5f),
+                                color = Color.Gray
+                            )
+                            DropdownList(
+                                modifier = modifier
+                                    .weight(2.5f)
+                                    .padding(end = 58.dp), placeholder = "東京都"
+                            )
+                        }
+                        Row(
+                            modifier = modifier
+                                .padding(vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "市区都町村",
+                                modifier = modifier
+                                    .wrapContentSize()
+                                    .weight(1.5f),
+                                color = Color.Gray
+                            )
+                            DropdownList(
+                                modifier = modifier.weight(2.5f),
+                                placeholder = "港区"
+                            )
+                        }
+                        Row(
+                            modifier = modifier
+                                .padding(vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "大字町名小字",
+                                modifier = modifier
+                                    .wrapContentSize()
+                                    .weight(1.5f),
+                                color = Color.Gray
+                            )
+                            DropdownList(modifier = modifier.weight(2.5f), placeholder = "赤坂")
+                        }
+                    }
+                }
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "郵便\n番号",
+                    modifier = modifier
+                        .wrapContentSize()
+                        .padding(16.dp),
+                    color = Color.Gray
+                )
+
+                Text(
+                    text = "郵便番号",
+                    modifier = modifier
+                        .wrapContentSize()
+                        .padding(16.dp),
+                    color = Color.Gray
+                )
+                FirstName("",
+                    passwordState = passwordState,
+                    modifier = Modifier
+                        .focusRequester(focusRequester)
+                        .padding(start = 8.dp, end = 32.dp),
+                    onImeAction = { }
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = modifier.padding(8.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = modifier.weight(1f)
+                ) {
+                    Text(text = "", modifier.fillMaxWidth())
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = modifier.weight(1f)
+                ) {
+                    DropdownList(
+                        modifier = modifier
+                            .weight(1.5f), placeholder = ""
+                    )
+                    Text(
+                        text = "丁目\n（地番）", modifier = modifier
+                            .weight(1f), fontSize = 12.sp, textAlign = TextAlign.Center,
+                        color = Color.Gray
+                    )
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = modifier.weight(1f)
+                ) {
+                    DropdownList(
+                        modifier = modifier
+                            .weight(1.5f), placeholder = ""
+                    )
+                    Text(
+                        text = "番\n（枝番）", modifier = modifier
+                            .weight(1f), fontSize = 12.sp, textAlign = TextAlign.Center,
+                        color = Color.Gray
+                    )
+                }
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = modifier.padding(8.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = modifier.weight(1f)
+                ) {
+                    Text(text = "", modifier.fillMaxWidth())
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = modifier.weight(1f)
+                ) {
+                    DropdownList(
+                        modifier = modifier
+                            .weight(1.5f), placeholder = ""
+                    )
+                    Text(
+                        text = "号\n（孫番）", modifier = modifier
+                            .weight(1f), fontSize = 12.sp, textAlign = TextAlign.Center,
+                        color = Color.Gray
+                    )
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = modifier.weight(1f)
+                ) {
+                    Text(text = "", modifier.fillMaxWidth())
+                }
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = modifier.padding(8.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = modifier.weight(1f)
+                ) {
+                    Text(
+                        text = "作業所名",
+                        modifier.fillMaxWidth(),
+                        textAlign = TextAlign.End,
+                        color = Color.Gray
+                    )
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = modifier.weight(2f)
+                ) {
+                    Text(
+                        text = "", modifier = modifier
+                            .weight(1f), fontSize = 12.sp, textAlign = TextAlign.Center
+                    )
+                    FirstName("入力してください",
+                        passwordState = passwordState,
+                        modifier = Modifier
+                            .focusRequester(focusRequester)
+                            .padding(start = 8.dp, end = 32.dp),
+                        onImeAction = { }
+                    )
+                }
+            }
+        }
+    }
+}
