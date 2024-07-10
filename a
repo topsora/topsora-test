@@ -1,0 +1,2 @@
+    implementation(libs.androidx.compose.material.core)
+androidx-compose-material-core = { group = "androidx.compose.material", name = "material" }
