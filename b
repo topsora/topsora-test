@@ -1,0 +1,8 @@
+composeBom = "2024.06.00"
+androidxNavigation = "2.7.7"
+androidxHiltNavigationCompose = "1.2.0"
+hilt = "2.51.1"
+material = "1.6.8"
+material3 = "1.3.0-beta04"
+androidxLifecycle = "2.8.3"
+accompanistPermissions = "0.34.0"
